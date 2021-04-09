@@ -14,7 +14,7 @@ services:
     ports:
       - 8000:8000
   postgres:
-    image: postgres:11.10-alpine
+    image: postgres:11.11-alpine
     environment:
       - POSTGRES_USER=kees
       - POSTGRES_PASSWORD=kees

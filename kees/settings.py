@@ -45,6 +45,8 @@ MIDDLEWARE = [
     'core.middleware.SetLastVisitMiddleware',
 ]
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
 
 CONSTANCE_ADDITIONAL_FIELDS = {
@@ -140,8 +142,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.Argon2PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'core.hashers.LDAPSaltedSHA1', # support while migrating old data
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher'
 ]
 
 # Internationalization

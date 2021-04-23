@@ -1,6 +1,8 @@
 from django.db.models import F
 from django.db.models.expressions import RawSQL
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 from django.middleware import csrf
 from django.template import Template, Context
 from django.views.decorators.http import require_http_methods
@@ -423,6 +425,23 @@ def delete_attachment(request, case_id, attachment_id):
         'page_title': case,
         'case': case,
     })
+
+def download_attachment(request, attachment_id):
+    try:
+        attachment = Attachment.objects.get(id=attachment_id)
+    except Attachment.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if not request.user.is_authenticated and not attachment.verify_signature(request.GET.get('s', '')):
+        return HttpResponse(status=404)
+
+    if settings.DEBUG:
+        return redirect(attachment.file.url)
+
+    response = HttpResponse(status=200)
+    response['Content-Disposition'] = 'attachment; filename={}'.format(attachment.name)
+    response['X-Accel-Redirect'] = attachment.file.url
+    return response
 
 def logs(request, case_id):
     case = get_object_or_404(Case, pk=case_id)

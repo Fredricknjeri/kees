@@ -32,8 +32,8 @@
             <tbody>
                 {% for attachment in case.attachments.all %}
                     <tr>
-                        <td><a href="{{ attachment.file.url }}">{{ attachment.display_name }}</a><br /></td>
-                        <td>{{ attachment.file.size|filesizeformat }}</td>
+                        <td><a href="{% url 'download_attachment' attachment.id %}">{{ attachment.display_name }}</a><br /></td>
+                        <td>{{ attachment.size|filesizeformat }}</td>
                         {% if case.is_open %}
                             <td><a href="{% url 'delete_attachment' case.id attachment.id %}"><i class="far fa-trash-alt"></i></a></td>
                         {% endif %}

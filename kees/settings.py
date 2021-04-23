@@ -223,7 +223,8 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'dashboard'
 
 LOGIN_EXEMPT_URLS = [
-    '^api/(.+)$',
-    '^media/(.+)$',
-    '^accounts/(.+)$'
+    r'^api/(.+)$',
+    r'^media/(.+)$',
+    r'^accounts/(.+)$',
+    r'^attachments/(\d+)/download/$'
 ]

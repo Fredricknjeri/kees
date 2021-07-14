@@ -2,6 +2,7 @@ import os
 from uuid import uuid4
 import html
 from importlib import import_module
+from django.core.signing import TimestampSigner, SignatureExpired, BadSignature
 from django.db.models import JSONField
 from django.utils.crypto import get_random_string
 from django.utils import timezone
@@ -343,6 +344,23 @@ class Attachment(models.Model):
 
         super(Attachment, self).save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
+    def get_signature(self):
+        signer = TimestampSigner()
+        return signer.sign_object({'attachment_id': self.id})
+
+    def verify_signature(self, value):
+        signer = TimestampSigner()
+
+        try:
+            unsigned = signer.unsign(value, max_age=30) # 30 seconds
+
+            if unsigned['attachment_id'] == self.id:
+                return True
+
+            return False
+        except (SignatureExpired, BadSignature):
+            return False
+
     @property
     def display_name(self):
         if self.name:
@@ -354,6 +372,13 @@ class Attachment(models.Model):
     def extension(self):
         _, extension = os.path.splitext(self.file.name)
         return extension.replace('.', '')
+
+    @property
+    def size(self):
+        try:
+            return self.file.size
+        except FileNotFoundError:
+            return 0
 
     class Meta:
         ordering = ['-id']

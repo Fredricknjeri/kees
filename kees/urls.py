@@ -55,6 +55,8 @@ urlpatterns = [
          views.create_attachment, name='create_attachment'),
     path('cases/view/<int:case_id>/attachments/delete/<int:attachment_id>/',
          views.delete_attachment, name='delete_attachment'),
+    path('attachments/<int:attachment_id>/download/',
+         views.download_attachment, name='download_attachment'),
     path('cases/view/<int:case_id>/logs', views.logs, name='logs'),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),

@@ -27,6 +27,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
+    nginx \
     postgresql-client \
     mime-support \
     && rm -rf /var/lib/apt/lists/*
@@ -39,6 +40,9 @@ ENV PATH="/app/venv/bin:${PATH}"
 COPY --from=ui-build /app/core/static/dist /app/core/static/dist
 COPY --from=ui-build /app/frontend/webpack-stats.json /app/frontend/webpack-stats.json
 
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/default.conf /etc/nginx/conf.d/default.conf
+
 COPY docker/config.py /app/kees/config.py
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
@@ -50,4 +54,4 @@ ENV KEES_ENVIRONMENT production
 
 EXPOSE 8000
 CMD ["/start.sh"]
-USER www-data
+# USER www-data

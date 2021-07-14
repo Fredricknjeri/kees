@@ -6,6 +6,7 @@ import hashlib
 from constance import config
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.utils.http import urlencode
 import requests
 
 class Action:
@@ -98,7 +99,7 @@ class Action:
         for attachment in case.attachments.all():
             yield {
                 'display_name': attachment.display_name,
-                'url': urljoin(config.URL, attachment.file.url),
+                'url': urljoin(config.URL, attachment.file.url, '?s={}'.format(urlencode(attachment.get_signature()))),
                 'extension': attachment.extension.upper()
             }
 

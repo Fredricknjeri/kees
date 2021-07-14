@@ -378,10 +378,13 @@ def create_attachment(request, case_id, attachment_type):
         form = AttachmentForm(request.POST, request.FILES, attachment_type=attachment_type)
         if form.is_valid():
             with reversion.create_revision():
-                form.save(case=case)
+                saved_attachments = form.save(case=case)
                 reversion.set_user(request.user)
 
-            case.logs.create(event='create_attachment', performer=request.user.to_dict())
+            for attachment in saved_attachments:
+                case.logs.create(event='create_attachment', performer=request.user.to_dict(), metadata={
+                    'attachment_name': attachment.display_name,
+                })
 
             return redirect('attachments', case.id)
     else:

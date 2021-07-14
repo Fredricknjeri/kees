@@ -15,6 +15,9 @@ from .models import CaseType, Case, Phase, Field, Attachment
 from .forms import ChangeAssigneeForm, ChangePhaseForm, AttachmentForm
 from .filters import CaseFilter
 
+def lockout(request, _):
+    return render(request, 'lockout.html', status=403)
+
 def startpage(request):
     return redirect('dashboard')
 

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 from .config import * # pylint: disable=unused-wildcard-import,wildcard-import
 
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'axes',
 ]
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
@@ -43,6 +45,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.middleware.LoginRequiredMiddleware',
     'core.middleware.SetLastVisitMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
@@ -86,6 +89,11 @@ CONSTANCE_CONFIG_FIELDSETS = {
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'core.User'
+
+AUTHENTICATION_BACKENDS = [
+    'axes.backends.AxesBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 SESSION_COOKIE_AGE = 3600*24*90 # sessions expire in 90 days
 
@@ -153,6 +161,17 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher'
 ]
+
+AXES_COOLOFF_TIME = timedelta(hours=1)
+AXES_FAILURE_LIMIT = 25
+
+AXES_PROXY_COUNT = int(os.getenv('AXES_PROXY_COUNT', '1'))
+AXES_META_PRECEDENCE_ORDER = [
+    'HTTP_X_FORWARDED_FOR',
+    'REMOTE_ADDR',
+]
+
+AXES_LOCKOUT_CALLABLE = 'core.views.lockout'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

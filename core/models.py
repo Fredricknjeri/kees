@@ -1,4 +1,5 @@
 import os
+from uuid import uuid4
 import html
 from importlib import import_module
 from django.db.models import JSONField
@@ -327,7 +328,8 @@ class Action(models.Model):
 
 def upload_to(instance, filename):
     dirname = instance.created_at.strftime('attachments/%Y/%m/%d/')
-    return os.path.join(dirname, get_random_string(length=24), filename)
+    _, extension = os.path.splitext(filename)
+    return os.path.join(dirname, get_random_string(length=24), str(uuid4()) + extension)
 
 class Attachment(models.Model):
     case = models.ForeignKey('Case', on_delete=models.CASCADE, related_name='attachments')

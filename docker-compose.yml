@@ -17,7 +17,7 @@ services:
     volumes:
       - ./media:/app/media
   postgres:
-    image: postgres:11.11-alpine
+    image: postgres:11.13-alpine
     environment:
       - POSTGRES_USER=kees
       - POSTGRES_PASSWORD=kees

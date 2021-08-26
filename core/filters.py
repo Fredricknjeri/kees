@@ -22,7 +22,7 @@ class CaseFilter(django_filters.FilterSet):
         fields = ['name', 'case_type', 'current_phase', 'assignee']
 
     def __init__(self, *args, **kwargs):
-        super(CaseFilter, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.filters['case_type'].label = 'Zaaktype'
         self.filters['current_phase'].label = 'Huidige fase'

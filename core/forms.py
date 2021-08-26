@@ -4,7 +4,7 @@ from .models import Case, Attachment
 
 class ChangeAssigneeForm(forms.ModelForm):
     def __init__(self, case, *args, **kwargs):
-        super(ChangeAssigneeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.fields['assignee'].widget.attrs.update({
             'data-bootstrap-select': 'true',
@@ -18,7 +18,7 @@ class ChangeAssigneeForm(forms.ModelForm):
 
 class ChangePhaseForm(forms.ModelForm):
     def __init__(self, case, *args, **kwargs):
-        super(ChangePhaseForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Case

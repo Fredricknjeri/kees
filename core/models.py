@@ -130,7 +130,7 @@ class Case(models.Model):
         if not self.id:
             self.current_phase = self.case_type.phases.all()[1]
 
-        super(Case, self).save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     def close(self):
         self.current_phase = None
@@ -342,7 +342,7 @@ class Attachment(models.Model):
         if not self.name:
             self.name = os.path.basename(self.file.name)
 
-        super(Attachment, self).save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+        super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
 
     def get_signature(self):
         signer = TimestampSigner()

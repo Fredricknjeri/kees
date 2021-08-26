@@ -23,7 +23,7 @@ class JSONEditor(Textarea):
         if not isinstance(value, (str, bytes)):
             value = json.dumps(value)
 
-        html = super(JSONEditor, self).render(name, value, {
+        html = super().render(name, value, {
             'hidden': True
         })
 

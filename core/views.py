@@ -157,8 +157,8 @@ def view_case(request, case_id, phase_id=None):
     if phase_id:
         try:
             phase = case.case_type.phases.get(pk=phase_id)
-        except Phase.DoesNotExist:
-            raise Http404('No Phase matches the given query.')
+        except Phase.DoesNotExist as does_not_exist:
+            raise Http404('No Phase matches the given query.') from does_not_exist
     elif case.is_open:
         phase = case.current_phase
     else:

@@ -2,7 +2,7 @@ coverage==5.5
 django-axes==5.26.0
 django-constance[database]==2.8.0
 django-crispy-forms==1.13.0
-django-filter==2.4.0
+django-filter==21.1
 django-nose==1.4.7
 django-webpack-loader==1.4.1
 django-reversion==4.0.0

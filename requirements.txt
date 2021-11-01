@@ -1,4 +1,4 @@
-coverage==5.5
+coverage==6.1.1
 django-axes==5.26.0
 django-constance[database]==2.8.0
 django-crispy-forms==1.13.0

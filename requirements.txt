@@ -4,7 +4,7 @@ django-constance[database]==2.8.0
 django-crispy-forms==1.13.0
 django-filter==2.4.0
 django-nose==1.4.7
-django-webpack-loader==0.7.0
+django-webpack-loader==1.4.1
 django-reversion==4.0.0
 Django==3.2.9
 djangorestframework==3.12.4

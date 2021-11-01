@@ -14,10 +14,7 @@ class Action:
 
     def execute(self, case, args):
         xxd = timezone.now().strftime('%Y%m%d%H%M%S')
-        plain_text = '{hash}\n{xxb}\n{hash}\n{xxc}\n{hash}\n{xxd}\n{hash}\n'.format(
-            **args,
-            xxd=xxd
-        )
+        plain_text = f"{args['hash']}\n{args['xxb']}\n{args['hash']}\n{args['xxc']}\n{args['hash']}\n{xxd}\n{args['hash']}\n"
 
         parsed_url = urlparse(args['url'])
         xxe = hashlib.sha1(plain_text.encode('utf-8')).hexdigest()
@@ -67,7 +64,7 @@ class Action:
                 metadata={
                     'success': False,
                     'host': parsed_url.netloc,
-                    'exception': '{}'.format(e)
+                    'exception': f'{e}'
                 }
             )
 
@@ -93,13 +90,13 @@ class Action:
             elif mapping['type'] == 'boolean':
                 yield {'id': mapping['dest_id'], 'value': 'J' if value else 'N'}
             else:
-                raise Exception('Unsupported type: {}'.format(mapping['type']))
+                raise Exception(f"Unsupported type: {mapping['type']}")
 
     def get_documents(self, case):
         for attachment in case.attachments.all():
             yield {
                 'display_name': attachment.display_name,
-                'url': urljoin(config.URL, attachment.file.url, '?s={}'.format(urlencode(attachment.get_signature()))),
+                'url': urljoin(config.URL, attachment.file.url, f'?s={urlencode(attachment.get_signature())}'),
                 'extension': attachment.extension.upper()
             }
 

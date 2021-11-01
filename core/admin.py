@@ -15,8 +15,8 @@ def create_add_to_group(group):
         for user in queryset:
             user.groups.add(group)
 
-    add_to_group.short_description = "Voeg toe aan groep {0}".format(group)
-    add_to_group.__name__ = 'add_to_group_{0}'.format(group.id)
+    add_to_group.short_description = f"Voeg toe aan groep {group}"
+    add_to_group.__name__ = f'add_to_group_{group.id}'
 
     return add_to_group
 
@@ -25,8 +25,8 @@ def create_delete_from_group(group):
         for user in queryset:
             user.groups.remove(group)
 
-    delete_from_group.short_description = "Verwijder uit groep {0}".format(group)
-    delete_from_group.__name__ = 'delete_from_group_{0}'.format(group.id)
+    delete_from_group.short_description = f"Verwijder uit groep {group}"
+    delete_from_group.__name__ = f'delete_from_group_{group.id}'
 
     return delete_from_group
 

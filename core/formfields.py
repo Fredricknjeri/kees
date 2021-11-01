@@ -32,10 +32,8 @@ class JSONEditor(Textarea):
             'data-jsoneditor': name,
         }
 
-        html += '''
-        <div %(attrs)s></div>
-        ''' % {
-            'attrs': flatatt(div_attrs),
-        }
+        html += f'''
+        <div {flatatt(div_attrs)}></div>
+        '''
 
         return mark_safe(html)

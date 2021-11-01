@@ -15,7 +15,7 @@ import { mapState } from 'vuex';
 import FormItems from '../components/FormItems';
 
 export default {
-  name: 'Form',
+  name: 'FormPage',
   props: {
     loading: Boolean
   },

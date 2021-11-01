@@ -2,7 +2,7 @@
   <div>
     <component v-for="item in formItems"
       class="form-group"
-      :is="item.field.type"
+      :is="getType(item.field.type)"
       :key="item.key"
       :field="item.field"
       :value="data[item.field.key]"
@@ -17,7 +17,7 @@ import ArrayField from './ArrayField';
 import ArrayTextField from './ArrayTextField';
 import CheckboxField from './CheckboxField';
 import DateField from './DateField';
-import Heading from './Heading';
+import HeadingItem from './HeadingItem';
 import NumberField from './NumberField';
 import RadioField from './RadioField';
 import SelectField from './SelectField';
@@ -31,7 +31,7 @@ export default {
     ArrayTextField,
     CheckboxField,
     DateField,
-    Heading,
+    HeadingItem,
     NumberField,
     RadioField,
     SelectField,
@@ -46,6 +46,13 @@ export default {
   methods: {
     onChange(key, value) {
       this.$emit('change', key, value)
+    },
+    getType(type) {
+      if (type === 'Heading') {
+        return 'HeadingItem'
+      }
+
+      return type
     }
   }
 }

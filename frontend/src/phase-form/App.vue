@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Alert v-if="alert" :type="alert.type" :message="alert.message" />
+    <AlertMessage v-if="alert" :type="alert.type" :message="alert.message" />
     <router-view @submit-form="submitForm"></router-view>
   </div>
 </template>
@@ -8,12 +8,12 @@
 <script>
 import { mapState } from 'vuex'
 import { objectDiff } from './lib'
-import Alert from './components/Alert'
+import AlertMessage from './components/AlertMessage'
 
 export default {
   name: 'App',
   components: {
-    'Alert': Alert,
+    AlertMessage,
   },
   data() {
     return {

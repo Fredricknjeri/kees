@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 
 import App from './App';
-import Form from './pages/Form';
+import FormPage from './pages/FormPage';
 import SubForm from './pages/SubForm';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const router = new VueRouter({
     routes: [
-      { path: '/', component: Form },
+      { path: '/', component: FormPage },
       { path: '/fields/:key/:index', component: SubForm }
     ],
     scrollBehavior() {

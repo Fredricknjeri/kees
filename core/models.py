@@ -98,7 +98,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return f'{self.first_name} {self.last_name}'
 
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email or settings.FROM_EMAIL, [
@@ -106,7 +106,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ], **kwargs)
 
     def __str__(self):
-        return '{} {} ({})'.format(self.first_name, self.last_name, self.username)
+        return f'{self.first_name} {self.last_name} ({self.username})'
 
     class Meta:
         verbose_name = _('Gebruiker')
@@ -194,7 +194,7 @@ class Case(models.Model):
         )
 
     def __str__(self):
-        return '#{}: {}'.format(self.id, self.name)
+        return f'#{self.id}: {self.name}'
 
 
 class CaseType(models.Model):
@@ -220,27 +220,23 @@ class CaseLog(models.Model):
 
     @property
     def display_performer(self):
-        return '{} {} ({})'.format(
-            self.performer.get('first_name'),
-            self.performer.get('last_name'),
-            self.performer.get('username')
-        )
+        return f"{self.performer.get('first_name')} {self.performer.get('last_name')} ({self.performer.get('username')})"
 
     @property
     def display_event(self):
         events = {
-            'change_phase': _('Fase aangepast naar %s' % self.metadata.get('new_phase')),
-            'next_phase': _('Fase doorgezet naar %s' % self.metadata.get('new_phase')),
-            'create_attachment': _('Bijlage %s toegevoegd' % self.metadata.get('attachment_name')),
-            'delete_attachment': _('Bijlage %s verwijderd' % self.metadata.get('attachment_name')),
-            'change_assignee': _('Behandelaar gewijzigd naar %s' % self.metadata.get('assignee_name', '-')),
+            'change_phase': _(f"Fase aangepast naar {self.metadata.get('new_phase')}"),
+            'next_phase': _(f"Fase doorgezet naar {self.metadata.get('new_phase')}"),
+            'create_attachment': _(f"Bijlage {self.metadata.get('attachment_name')} toegevoegd"),
+            'delete_attachment': _(f"Bijlage {self.metadata.get('attachment_name')} verwijderd"),
+            'change_assignee': _(f"Behandelaar gewijzigd naar {self.metadata.get('assignee_name', '-')}"),
             'claim_case': _('Zaak in behandeling genomen'),
             'create_case': _('Zaak aangemaakt'),
             'update_case': _('Zaak bijgewerkt'),
             'closed_case': _('Zaak gesloten'),
-            'mozard_request': _('Externe koppeling: Zaak aangemaakt op %s onder nummer %s' % (self.metadata.get('host'), self.metadata.get('mozard_case_id'))),
-            'http_request': _('Externe koppeling: %s' % self.metadata.get('message', '-')),
-            'send_email': _('E-mail koppeling: Verstuurd naar %s met onderwerp %s' % (self.metadata.get('email_to'), self.metadata.get('subject')))
+            'mozard_request': _(f"Externe koppeling: Zaak aangemaakt op {self.metadata.get('host')} onder nummer {self.metadata.get('mozard_case_id')}"),
+            'http_request': _(f"Externe koppeling: {self.metadata.get('message', '-')}"),
+            'send_email': _(f"E-mail koppeling: Verstuurd naar {self.metadata.get('email_to')} met onderwerp {self.metadata.get('subject')}")
         }
 
         return events.get(self.event, self.event)

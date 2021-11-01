@@ -257,7 +257,7 @@ def next_phase(request, case_id):
         for item in case.current_phase.fields:
             field = Field.objects.get(key=item)
 
-            if field.type == 'Heading' or field.type == 'Template':
+            if field.type in ['Heading', 'Template']:
                 continue
 
             required = field.args.get('required')
@@ -271,7 +271,7 @@ def next_phase(request, case_id):
         messages.add_message(
             request,
             messages.ERROR,
-            _('Kan de zaak niet doorzetten naar de volgende fase omdat de volgende velden ontbreken: {}.'.format(', '.join(missing_fields)))
+            _(f"Kan de zaak niet doorzetten naar de volgende fase omdat de volgende velden ontbreken: {', '.join(missing_fields)}.")
         )
 
         return redirect('view_case', case.id)
@@ -439,7 +439,7 @@ def download_attachment(request, attachment_id):
         return redirect(attachment.file.url)
 
     response = HttpResponse(status=200)
-    response['Content-Disposition'] = 'attachment; filename={}'.format(attachment.name)
+    response['Content-Disposition'] = f'attachment; filename={attachment.name}'
     response['X-Accel-Redirect'] = attachment.file.url
     return response
 

@@ -1,5 +1,5 @@
 # UI build container
-FROM node:12.22.5-alpine AS ui-build
+FROM node:12.22.7-alpine AS ui-build
 WORKDIR /app/frontend
 
 COPY frontend/package.json \
@@ -11,7 +11,7 @@ COPY frontend /app/frontend
 RUN npm run build
 
 # API build container
-FROM python:3.9-slim AS api-build
+FROM python:3.10-slim AS api-build
 WORKDIR /app
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -23,7 +23,7 @@ COPY requirements.txt /app
 RUN /app/venv/bin/pip3 install -r requirements.txt
 
 # Final container
-FROM python:3.9-slim
+FROM python:3.10-slim
 WORKDIR /app
 
 RUN apt-get update && apt-get install --no-install-recommends -y \

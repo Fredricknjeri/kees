@@ -42,7 +42,7 @@ class Action:
             case.logs.create(
                 event='send_email',
                 metadata={
-                    'error': 'Could not send e-mail due to exception: {}'.format(e)
+                    'error': f'Could not send e-mail due to exception: {e}'
                 }
             )
 

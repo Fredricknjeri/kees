@@ -21,7 +21,7 @@ class Action:
             case.logs.create(
                 event='http_request',
                 metadata={
-                    'message': 'Sucessfully performed HTTP request to {}. Response {} data: {}'.format(args['url'], response.status_code, response.text)
+                    'message': f"Sucessfully performed HTTP request to {args['url']}. Response {response.status_code} data: {response.text}"
                 }
             )
 
@@ -30,7 +30,7 @@ class Action:
             case.logs.create(
                 event='http_request',
                 metadata={
-                    'message': 'Could not complete request due to exception {}'.format(e)
+                    'message': f'Could not complete request due to exception {e}'
                 }
             )
 

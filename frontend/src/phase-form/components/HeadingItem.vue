@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'Heading',
+  name: 'HeadingItem',
   props: {
     field: Object
   }

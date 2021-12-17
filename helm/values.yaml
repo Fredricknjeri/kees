@@ -1,7 +1,7 @@
 replicaCount: 1
 
 keesImage: registry.gitlab.com/delta10/kees:latest
-postgresImage: postgres:14.0
+postgresImage: postgres:14.1
 
 imagePullPolicy: IfNotPresent
 imagePullSecrets: []

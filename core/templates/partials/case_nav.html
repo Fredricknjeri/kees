@@ -18,17 +18,19 @@
                     </div>
                 {% endif %}
                 {% if case.current_phase %}
-                    <form method="POST" action="{% url 'next_phase' case.id %}">
-                        {% csrf_token %}
-                        <button class="btn btn-outline-dark btn-light" type="submit">
-                            {% if case.current_phase == case.last_phase %}
-                                {% trans 'Afhandelen' %}
-                            {% else %}
-                                {% trans 'Fase afronden' %}
-                            {% endif %}
-                            &#8250;
-                        </button>
-                    </form>
+                    {% if perms.core.can_manage_cases or case.assignee.id is request.user.id %}
+                        <form method="POST" action="{% url 'next_phase' case.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-dark btn-light" type="submit">
+                                {% if case.current_phase == case.last_phase %}
+                                    {% trans 'Afhandelen' %}
+                                {% else %}
+                                    {% trans 'Fase afronden' %}
+                                {% endif %}
+                                &#8250;
+                            </button>
+                        </form>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
@@ -37,7 +39,7 @@
             {% if case.assignee %}
                 {% trans 'Behandelaar:' %} {{ case.assignee }}
             {% else %}
-                {% if case.current_phase == selected_phase %}
+                {% if case.current_phase == selected_phase and perms.core.can_manage_cases %}
                     <form method="POST" action="{% url 'claim_case' case.id %}">
                         {% csrf_token %}
                         <button class="btn btn-link" type="submit"><i class="fas fa-chevron-right"></i>&nbsp;&nbsp;{% trans 'In behandeling nemen' %}</button>

@@ -164,6 +164,10 @@ def view_case(request, case_id, phase_id=None):
     else:
         phase = case.case_type.phases.last()
 
+    disabled = True
+    if not case.is_closed and (request.user.has_perm('core.can_manage_cases') or case.assignee == request.user):
+        disabled = False
+
     return render(request, 'cases/view.html', {
         'page_title': case,
         'case': case,
@@ -171,7 +175,7 @@ def view_case(request, case_id, phase_id=None):
         'templates': _render_templates(phase, case),
         'js_phase_form_data': {
             'formItems': _get_form_items(phase),
-            'disabled': case.is_closed,
+            'disabled': disabled,
             'case': {
                 'id': case.id,
                 'data': case.data,
@@ -233,6 +237,7 @@ def delete_case(request, case_id):
     })
 
 @require_http_methods(['POST'])
+@permission_required('core.can_manage_cases', raise_exception=True)
 def claim_case(request, case_id):
     case = get_object_or_404(Case, pk=case_id)
 
